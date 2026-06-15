@@ -1,3 +1,14 @@
+# Custom
+hexdump
+reverse
+prun
+pipe2
+worker
+timeserver
+timeclient
+echoserver
+echoclient
+
 # Prerequisites
 *.d
 
