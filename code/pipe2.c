@@ -94,7 +94,6 @@ int main(int argc, char *argv[]) {
     close(pipefd[0]);
     close(pipefd[1]);
 
-    int status1, status2;
     int exit_code = 0;
 
     // Изчакваме и двата процеса без значение кой ще завърши първи
@@ -102,12 +101,11 @@ int main(int argc, char *argv[]) {
     int status;
     while ((wpid = waitpid(-1, &status, 0)) > 0) {
         if (wpid == pid2) {
-            // Запазваме статуса на дясната команда (cmd2)
-            status2 = status;
-            if (WIFEXITED(status2)) {
-                exit_code = WEXITSTATUS(status2);
-            } else if (WIFSIGNALED(status2)) {
-                exit_code = 128 + WTERMSIG(status2);
+            // Директно извличаме статуса на дясната команда (cmd2) от 'status'
+            if (WIFEXITED(status)) {
+                exit_code = WEXITSTATUS(status);
+            } else if (WIFSIGNALED(status)) {
+                exit_code = 128 + WTERMSIG(status);
             }
         }
     }
